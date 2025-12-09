@@ -143,19 +143,5 @@ INSERT INTO artikel VALUES (1, 'Artikel 1', 'Konten 1');
 
 ---
 
-## ðŸŽ¨ 9. Template
-**header.php** - Bootstrap navbar & CSS
-ðŸ“¸ *(screenshot)*
-
-**footer.php** - Copyright footer
-ðŸ“¸ *(screenshot)*
-
----
-
-## 10. Cara Jalankan
-1. XAMPP running
-2. Import SQL database
-3. Buka `http://localhost/lab11_full/`
-4. Test CRUD
 
 
