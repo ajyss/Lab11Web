@@ -1,38 +1,49 @@
-﻿# ðŸ“˜ README â€“ Praktikum 11: Front Controller & Modular Architecture
+﻿# README Praktikum 11: Front Controller & Modular Architecture
 
-## ðŸ‘¤ Identitas Mahasiswa
-* **Nama**: ......................................................
-* **NIM**: ......................................................
-* **Kelas**: ......................................................
+## Identitas Mahasiswa
+* **Nama**: Muhammad Aziz Tri Ramadhan
+
+* **NIM**: 312410380
+
+* **Kelas**: TI24A3
+
 * **Dosen**: Agung Nugroho, S.Kom., M.Kom
 
 ---
 
-## ðŸ”¥ 1. Deskripsi
+## 1. Deskripsi
 Praktikum 11 mengembangkan Praktikum 10 dengan Front Controller Pattern, Modular Architecture, dan URL Routing.
 
 ---
 
-## ðŸ“‚ 2. Struktur Direktori
+## 2. Struktur Direktori
 ```
 lab11_full/
-â”œâ”€ config.php          (Database Config)
-â”œâ”€ index.php           (Front Controller)
-â”œâ”€ .htaccess           (URL Rewriting)
-â”œâ”€ class/
-â”‚   â”œ Database.php     (CRUD)
-â”‚   â”” Form.php         (Form Builder)
-â”œâ”€ module/
-â”‚   â”œâ”€ home/index.php
-â”‚   â””â”€ artikel/        (index, tambah, ubah, hapus)
-â””â”€ template/
-   â”œ header.php
-   â”” footer.php
+│ index.php
+│ config.php
+│ .htaccess (opsional)
+│
+├─ class/
+│  ├─ Database.php
+│  └─ Form.php
+│
+├─ module/
+│  ├─ home/
+│  │  └─ index.php
+│  └─ artikel/
+│     ├─ index.php
+│     ├─ tambah.php
+│     ├─ ubah.php
+│     └─ hapus.php
+│
+└─ template/
+   ├─ header.php
+   └─ footer.php
 ```
 
 ---
 
-## âš™ï¸ 3. Database Config
+## 3. Database Config
 ```php
 $config = [
   'host' => 'localhost',
@@ -44,7 +55,7 @@ $config = [
 
 ---
 
-## ðŸ”§ 4. Class Database.php
+## 4. Class Database.php
 ```php
 class Database {
     public function getAll($table) { /* return array */ }
@@ -65,7 +76,7 @@ $form->render();
 
 ---
 
-## ðŸŽ¯ 6. Front Controller (index.php)
+## 6. Front Controller (index.php)
 ```php
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/home/index';
 $segments = explode('/', trim($path, '/'));
@@ -80,14 +91,17 @@ include "template/footer.php";
 
 ---
 
-## ðŸ“° 7. CRUD Artikel
+## 7. CRUD Artikel
 
 **index.php** - List
 ```php
 $db = new Database();
 $data = $db->getAll('artikel');
 // Tampilkan dalam tabel
+
 ```
+**📸Index (Daftar Artikel)**  
+    ![Screenshot - Index](index.png)
 
 **tambah.php** - Add
 ```php
@@ -97,22 +111,26 @@ if(isset($_POST['submit'])){
     header("Location: /lab11_full/artikel/index");
 }
 ```
+**📸Tambah (Tambah Artikel)**  
+    ![Screenshot - Index](tambah.png)
 
 **ubah.php** - Edit
 ```php
 $artikel = $db->getById('artikel', 'id', $_GET['id']);
 // Update via POST
 ```
-
+**📸Ubah (Ubah Artikel)**  
+    ![Screenshot - Index](ubah.png)
 **hapus.php** - Delete
 ```php
 $db->query("DELETE FROM artikel WHERE id='$_GET[id]'");
 header("Location: /lab11_full/artikel/index");
 ```
-
+**📸Hapus (Daftar Artikel)**  
+    ![Screenshot - Index](hapus.png)
 ---
 
-## ðŸ—„ï¸ 8. SQL Setup
+## 8. SQL Setup
 ```sql
 CREATE DATABASE latihan_oop;
 CREATE TABLE artikel (
@@ -134,41 +152,10 @@ INSERT INTO artikel VALUES (1, 'Artikel 1', 'Konten 1');
 
 ---
 
-## ðŸš€ 10. Cara Jalankan
+## 10. Cara Jalankan
 1. XAMPP running
 2. Import SQL database
 3. Buka `http://localhost/lab11_full/`
 4. Test CRUD
 
 
-## 📸 Screenshots
-Letakkan hasil screenshot Anda di folder `screenshots/` (buat folder di root project) dan beri nama file sesuai petunjuk di bawah agar gambar tampil otomatis di README. Contoh: `screenshots/index.png`.
-
-- **Index (Daftar Artikel)**  
-    ![Screenshot - Index](screenshots/index.png)
-    *Saran nama file:* `screenshots/index.png`
-
-- **Tambah (Form Tambah Artikel)**  
-    ![Screenshot - Tambah](screenshots/tambah.png)
-    *Saran nama file:* `screenshots/tambah.png`
-
-- **Ubah (Form Ubah Artikel)**  
-    ![Screenshot - Ubah](screenshots/ubah.png)
-    *Saran nama file:* `screenshots/ubah.png`
-
-- **Hapus (Konfirmasi / Setelah Hapus)**  
-    ![Screenshot - Hapus](screenshots/hapus.png)
-    *Saran nama file:* `screenshots/hapus.png`
-
-Catatan: Gunakan path relatif `screenshots/<nama>.png` agar gambar tampil saat README dibuka di GitHub atau browser lokal.
-
----
-
-## âœ¨ 11. Fitur Utama
-âœ… Front Controller Pattern
-âœ… Modular Architecture
-âœ… CRUD dengan OOP Class
-âœ… Clean URL Routing
-âœ… Security (SQL Injection prevention)
-
----
