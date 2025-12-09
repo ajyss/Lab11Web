@@ -67,7 +67,7 @@ class Database {
 
 ---
 
-## ðŸ“‹ 5. Class Form.php
+## 5. Class Form.php
 ```php
 $form->addField("judul", "Judul", "text", "");
 $form->addField("konten", "Konten", "textarea", "");
