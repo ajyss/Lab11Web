@@ -18,7 +18,11 @@ if ($_POST) {
     // Perhatikan: query() di class Database praktikum 10 mengembalikan objek mysqli_result
     $sql = "SELECT * FROM users WHERE username = '{$username}' LIMIT 1";
     $result = $db->query($sql);
-    $data = $result->fetch_assoc();
+    if ($result) {
+        $data = $result->fetch_assoc();
+    } else {
+        $data = null;
+    }
 
     // Verifikasi password
     if ($data && password_verify($password, $data['password'])) {

@@ -26,10 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $db->escape($_SESSION['username']);
         $sql = "SELECT password FROM users WHERE username = '{$username}' LIMIT 1";
         $result = $db->query($sql);
-        $user = $result->fetch_assoc();
+        if ($result) {
+            $user = $result->fetch_assoc();
+        } else {
+            $user = null;
+        }
 
         // Verifikasi password lama
-        if (!password_verify($current_password, $user['password'])) {
+        if (!$user || !password_verify($current_password, $user['password'])) {
             $message = "Password lama salah!";
         } else {
             // Hash password baru
