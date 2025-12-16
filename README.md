@@ -197,7 +197,7 @@ CREATE TABLE users (
 
 -- Insert user admin
 INSERT INTO users (username, password, nama) 
-VALUES ('admin', '$2y$10$jT0289ShNEi8yaMuIqOeUen.nmi54QP27IFNzxUsw0RjO7x18T5E6', 'Administrator');
+VALUES ('admin', '$2y$10$hnxCnJbsizidVgmfN0CH2.wOBZSN.LOWsChado19ipDfN0E0TGqUq', 'Administrator');
 -- Password: admin123 (hashed)
 ```
 CREATE TABLE artikel (
