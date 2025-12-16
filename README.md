@@ -1,4 +1,4 @@
-﻿# README Praktikum 11: Front Controller & Modular Architecture
+﻿# README Praktikum 12: Autentikasi dan Session
 
 ## Identitas Mahasiswa
 * **Nama**: Muhammad Aziz Tri Ramadhan
@@ -12,7 +12,7 @@
 ---
 
 ## 1. Deskripsi
-Praktikum 11 mengembangkan Praktikum 10 dengan Front Controller Pattern, Modular Architecture, dan URL Routing.
+Praktikum 12 menambahkan fitur autentikasi dan session management pada sistem CRUD artikel dari Praktikum 11. Fitur utama meliputi login/logout, proteksi halaman, dan manajemen profil user.
 
 ---
 
@@ -30,15 +30,28 @@ lab11_full/
 ├─ module/
 │  ├─ home/
 │  │  └─ index.php
-│  └─ artikel/
-│     ├─ index.php
-│     ├─ tambah.php
-│     ├─ ubah.php
-│     └─ hapus.php
+│  ├─ artikel/
+│  │  ├─ index.php
+│  │  ├─ tambah.php
+│  │  ├─ ubah.php
+│  │  └─ hapus.php
+│  └─ user/
+│     ├─ login.php
+│     ├─ logout.php
+│     └─ profile.php
 │
-└─ template/
-   ├─ header.php
-   └─ footer.php
+├─ template/
+│  ├─ header.php
+│  └─ footer.php
+│
+└─ screenshots/
+   ├─ home.png
+   ├─ login.png
+   ├─ artikel_index.png
+   ├─ tambah.png
+   ├─ ubah.png
+   ├─ hapus.png
+   └─ profile.png
 ```
 
 ---
@@ -91,48 +104,102 @@ include "template/footer.php";
 
 ---
 
-## 7. CRUD Artikel
+## 7. Autentikasi dan Session
 
-**index.php** - List
+### Session Management
 ```php
-$db = new Database();
-$data = $db->getAll('artikel');
-// Tampilkan dalam tabel
+session_start(); // Di awal index.php
 
+// Set session saat login
+$_SESSION['is_login'] = true;
+$_SESSION['username'] = $data['username'];
+$_SESSION['nama'] = $data['nama'];
+
+// Cek session
+if (!isset($_SESSION['is_login'])) {
+    header('Location: user/login');
+}
+
+// Logout
+session_destroy();
 ```
-**📸Index (Daftar Artikel)**  
-    ![Screenshot - Index](index.png)
 
-**tambah.php** - Add
+### Proteksi Halaman
 ```php
-if(isset($_POST['submit'])){
-    $sql = "INSERT INTO artikel (judul,konten) VALUES (...)";
-    $db->query($sql);
-    header("Location: /lab11_full/artikel/index");
+$public_pages = ['home', 'user'];
+if (!in_array($mod, $public_pages)) {
+    if (!isset($_SESSION['is_login'])) {
+        header('Location: user/login');
+        exit();
+    }
 }
 ```
-**📸Tambah (Tambah Artikel)**  
-    ![Screenshot - Index](tambah.png)
 
-**ubah.php** - Edit
+### Login System
+**login.php**
 ```php
-$artikel = $db->getById('artikel', 'id', $_GET['id']);
-// Update via POST
+if ($_POST) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $sql = "SELECT * FROM users WHERE username = '{$username}' LIMIT 1";
+    $result = $db->query($sql);
+    $data = $result->fetch_assoc();
+    if ($data && password_verify($password, $data['password'])) {
+        $_SESSION['is_login'] = true;
+        $_SESSION['username'] = $data['username'];
+        $_SESSION['nama'] = $data['nama'];
+        header('Location: ../artikel/index');
+    }
+}
 ```
-**📸Ubah (Ubah Artikel)**  
-    ![Screenshot - Index](ubah.png)
-**hapus.php** - Delete
+**📸Login**  
+![Screenshot - Login](screenshots/login.png)
+
+### Profil User
+**profile.php**
 ```php
-$db->query("DELETE FROM artikel WHERE id='$_GET[id]'");
-header("Location: /lab11_full/artikel/index");
+// Tampilkan data user
+echo $_SESSION['nama'];
+echo $_SESSION['username'];
+
+// Ubah password
+if ($_POST) {
+    $current = $_POST['current_password'];
+    $new = $_POST['new_password'];
+    // Validasi dan update dengan hash
+    $hashed = password_hash($new, PASSWORD_DEFAULT);
+    $db->query("UPDATE users SET password = '{$hashed}' WHERE username = '{$_SESSION['username']}'");
+}
 ```
-**📸Hapus (Daftar Artikel)**  
-    ![Screenshot - Index](hapus.png)
+**📸Profil**  
+![Screenshot - Profile](screenshots/profile.png)
+
 ---
 
 ## 8. SQL Setup
 ```sql
 CREATE DATABASE latihan_oop;
+
+-- Tabel artikel (dari Praktikum 11)
+CREATE TABLE artikel (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    judul VARCHAR(255) NOT NULL,
+    konten TEXT NOT NULL
+);
+
+-- Tabel users (untuk autentikasi)
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    nama VARCHAR(100) NOT NULL
+);
+
+-- Insert user admin
+INSERT INTO users (username, password, nama) 
+VALUES ('admin', '$2y$10$jT0289ShNEi8yaMuIqOeUen.nmi54QP27IFNzxUsw0RjO7x18T5E6', 'Administrator');
+-- Password: admin123 (hashed)
+```
 CREATE TABLE artikel (
     id INT AUTO_INCREMENT PRIMARY KEY,
     judul VARCHAR(255) NOT NULL,
