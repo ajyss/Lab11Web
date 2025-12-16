@@ -1,15 +1,15 @@
 ﻿
-# 🚀 IMPLEMENTASI PHP OOP, ROUTER, DAN AUTENTIKASI AMAN (PRAKTIKUM 11 & 12)Dokumen ini menjelaskan arsitektur, implementasi, dan fungsi setiap file kode yang ada dalam proyek ini, dengan penekanan pada fitur **Autentikasi (Praktikum 12)** dan **Keamanan Data**.
+# 🚀 IMPLEMENTASI PHP OOP, ROUTER, DAN AUTENTIKASI AMAN (PRAKTIKUM 11 & 12)
 
 | Detail Akademik | Keterangan |
 | --- | --- |
 | **Judul Proyek** | Sistem Informasi Manajemen Artikel Berbasis PHP OOP dan Session |
 | **Nama Kampus** | UNIVERSITAS PELITA BANGSA |
 | **Mata Kuliah** | Pemrograman Web |
-| **Dosen Pengampu** | [Nama Dosen Anda] |
-| **Nama Mahasiswa** | [Nama Lengkap Anda] |
-| **NIM** | [NIM Anda] |
-| **Kelas** | [Kelas Anda, contoh: TI.21.B1] |
+| **Dosen Pengampu** | Agung Nugroho, S.Kom., M.Kom |
+| **Nama Mahasiswa** | Muhammad Aziz Tri Ramadhan |
+| **NIM** | 312410380 |
+| **Kelas** | TI.24.A3 |
 | **Jurusan** | Teknik Informatika |
 
 ---
@@ -24,7 +24,9 @@
 
 ---
 
-## 2. ⚙️ Analisis Kode Program (Per File)###2.1. `index.php` (The Router & Session Gatekeeper)File ini adalah **jantung arsitektur** yang menentukan halaman mana yang dimuat dan menerapkan pengamanan sesi.
+## 2. ⚙️ Analisis Kode Program (Per File)
+
+### 2.1. `index.php` (The Router & Session Gatekeeper)File ini adalah **jantung arsitektur** yang menentukan halaman mana yang dimuat dan menerapkan pengamanan sesi.
 
 | Bagian Kode | Penjelasan Teknis & Implementasi P12 |
 | --- | --- |
