@@ -16,7 +16,7 @@
 
 ## 1. 🔍 Arsitektur dan Konfigurasi DasarProyek ini mengadopsi pola **Front Controller (Router)**, di mana semua *request* diproses oleh `index.php`. File-file di *class* (`Database.php`, `Form.php`) berfungsi sebagai **Model** yang mengelola logika bisnis dan data.
 
-###1.1 Prasyarat Database (`latihan_oop`)Pastikan *database* **`latihan_oop`** sudah memiliki tabel `users` (wajib `VARCHAR(255)` untuk *password*) dan data admin yang sudah di-*hash*:
+### 1.1 Prasyarat Database (`latihan_oop`)Pastikan *database* **`latihan_oop`** sudah memiliki tabel `users` (wajib `VARCHAR(255)` untuk *password*) dan data admin yang sudah di-*hash*:
 
 | Username | Password |
 | --- | --- |
