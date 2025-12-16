@@ -20,7 +20,6 @@ table { background-color: white; }
         <li class="nav-item"><a class="nav-link" href="/lab11_full/home/index">Home</a></li>
         <?php if (isset($_SESSION['is_login'])): ?>
           <li class="nav-item"><a class="nav-link" href="/lab11_full/artikel/index">Data Artikel</a></li>
-          <li class="nav-item"><a class="nav-link" href="/lab11_full/user/profile">Profil</a></li>
         <?php endif; ?>
       </ul>
       <ul class="navbar-nav ms-auto">
