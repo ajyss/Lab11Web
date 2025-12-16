@@ -21,7 +21,11 @@ class Database {
     }
 
     private function loadConfig() {
-        include __DIR__ . '/../config.php';
+        // Mengambil konfigurasi dari config.php (sudah menggunakan 'latihan_oop')
+        include __DIR__ . '/../config.php'; 
+        
+        global $config; 
+
         $this->host = $config['host'];
         $this->user = $config['username'];
         $this->password = $config['password'];
@@ -56,5 +60,23 @@ class Database {
 
         return $result ? $result->fetch_assoc() : null;
     }
+    
+    // --- PENAMBAHAN UNTUK PRAKTIKUM 12 ---
+
+    public function getUserByUsername($username) {
+        return $this->getById('users', 'username', $username);
+    }
+
+    public function updateUser($id, $data) {
+        $id = (int)$id;
+        $set_parts = [];
+        foreach ($data as $key => $value) {
+            $set_parts[] = "{$key} = '{$this->escape($value)}'";
+        }
+        
+        $sql = "UPDATE users SET " . implode(', ', $set_parts) . " WHERE id = {$id}";
+        return $this->query($sql);
+    }
+    // ----------------------------------------
 }
 ?>

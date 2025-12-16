@@ -1,5 +1,5 @@
 <?php
-// Cek jika belum login, redirect ke login
+// Session check sudah dilakukan di index.php, tapi boleh dipertahankan
 if (!isset($_SESSION['is_login'])) {
     header('Location: /lab11_full/user/login');
     exit;
@@ -7,8 +7,16 @@ if (!isset($_SESSION['is_login'])) {
 
 $db = new Database();
 $message = "";
+$user_id = $_SESSION['user_id'] ?? null; 
 
-// Jika form submit untuk ubah password
+// Ambil data user saat ini
+$current_user_data = $db->getById('users', 'id', $user_id);
+
+if (!$user_id || !$current_user_data) {
+    $message = "<div class='alert alert-danger'>Data user tidak ditemukan. Silakan login ulang.</div>";
+}
+
+// Logika Proses Ubah Password
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
@@ -21,31 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "Password baru dan konfirmasi tidak cocok!";
     } elseif (strlen($new_password) < 6) {
         $message = "Password baru minimal 6 karakter!";
+    } 
+    // Verifikasi password lama menggunakan hash
+    elseif (!password_verify($current_password, $current_user_data['password'])) {
+        $message = "Password lama salah!";
     } else {
-        // Ambil data user dari database
-        $username = $db->escape($_SESSION['username']);
-        $sql = "SELECT password FROM users WHERE username = '{$username}' LIMIT 1";
-        $result = $db->query($sql);
-        if ($result) {
-            $user = $result->fetch_assoc();
-        } else {
-            $user = null;
-        }
+        // Hash password baru (Sesuai Praktikum 12)
+        $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
 
-        // Verifikasi password lama
-        if (!$user || !password_verify($current_password, $user['password'])) {
-            $message = "Password lama salah!";
+        // Update password di database menggunakan method updateUser
+        $update_data = ['password' => $hashed_new_password];
+        if ($db->updateUser($user_id, $update_data)) {
+            $message = "<div class='alert alert-success'>Password berhasil diubah!</div>";
         } else {
-            // Hash password baru
-            $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-            // Update password di database
-            $update_sql = "UPDATE users SET password = '{$hashed_new_password}' WHERE username = '{$username}'";
-            if ($db->query($update_sql)) {
-                $message = "Password berhasil diubah!";
-            } else {
-                $message = "Gagal mengubah password!";
-            }
+            $message = "<div class='alert alert-danger'>Gagal mengubah password!</div>";
         }
     }
 }
@@ -63,11 +60,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <table class="table table-bordered">
                 <tr>
                     <th>Nama</th>
-                    <td><?= $_SESSION['nama'] ?></td>
+                    <td><?= htmlspecialchars($_SESSION['nama'] ?? 'N/A') ?></td>
                 </tr>
                 <tr>
                     <th>Username</th>
-                    <td><?= $_SESSION['username'] ?></td>
+                    <td><?= htmlspecialchars($_SESSION['username'] ?? 'N/A') ?></td>
+                </tr>
+                <tr>
+                    <th>ID User</th>
+                    <td><?= htmlspecialchars($_SESSION['user_id'] ?? 'N/A') ?></td>
                 </tr>
             </table>
         </div>

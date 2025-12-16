@@ -2,7 +2,7 @@
 include "config.php";
 include "class/Database.php";
 include "class/Form.php";
-session_start();
+session_start(); // Session dimulai di sini
 
 $path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/home/index';
 $segments = explode('/', trim($path,'/'));
@@ -23,7 +23,7 @@ if (!in_array($mod, $public_pages)) {
 $file = "module/{$mod}/{$page}.php";
 
 if(file_exists($file)){
-    // Jangan load header/footer jika sedang di halaman login (opsional, agar tampilan bersih)
+    // Logika load header/footer agar login page tidak punya header/footer
     if ($mod == 'user' && $page == 'login') {
         include $file;
     } else {

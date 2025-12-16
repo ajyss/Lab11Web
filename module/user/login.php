@@ -1,7 +1,7 @@
 <?php
-// Cek jika sudah login, langsung ke home
+// Cek jika sudah login, langsung ke halaman artikel (Sesuai Praktikum 12)
 if (isset($_SESSION['is_login'])) {
-    header('Location: /lab11_full/home/index');
+    header('Location: /lab11_full/artikel/index'); 
     exit;
 }
 
@@ -9,28 +9,24 @@ $message = "";
 
 // Logika Proses Login
 if ($_POST) {
-    $db = new Database();
-    // Ambil input dan sanitasi (basic)
-    $username = $db->escape($_POST['username']);
+    // $db diakses karena sudah di-include di index.php
+    $db = new Database(); 
+    
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Query cari user berdasarkan username
-    // Perhatikan: query() di class Database praktikum 10 mengembalikan objek mysqli_result
-    $sql = "SELECT * FROM users WHERE username = '{$username}' LIMIT 1";
-    $result = $db->query($sql);
-    if ($result) {
-        $data = $result->fetch_assoc();
-    } else {
-        $data = null;
-    }
+    // Gunakan method baru untuk mendapatkan data user
+    $data = $db->getUserByUsername($username);
 
-    // Verifikasi password
+    // Verifikasi password (aman karena menggunakan password_verify)
     if ($data && password_verify($password, $data['password'])) {
         // Login Sukses: Set Session
         $_SESSION['is_login'] = true;
+        $_SESSION['user_id'] = $data['id']; // <-- KRITIS: Menyimpan ID user untuk profile
         $_SESSION['username'] = $data['username'];
         $_SESSION['nama'] = $data['nama'];
-        // Redirect ke halaman admin/artikel
+        
+        // Redirect ke halaman artikel/index
         header('Location: /lab11_full/artikel/index');
         exit;
     } else {
@@ -73,9 +69,6 @@ if ($_POST) {
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
         </form>
-        <div class="mt-3 text-center">
-            <a href="/lab11_full/home/index">Kembali ke Home</a>
-        </div>
     </div>
 </body>
 </html>
