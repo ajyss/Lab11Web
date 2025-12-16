@@ -57,6 +57,9 @@
 > 📸 **Login**
 <img src="screenshots/login2.png">
 
+ 📸 **Masuk Ke Halaman Home Page (index)**
+<img src="screenshots/login33.png">
+
 ### 2.4. `module/user/logout.php`| Kode Perbaikan | Fungsi & Keterkaitan P12 |
 | --- | --- |
 | `session_start();` | **Perbaikan Error.** Meskipun `index.php` sudah memanggilnya, ini memastikan sesi diinisialisasi, menghindari *error* *Trying to destroy uninitialized session* saat diakses langsung. |
