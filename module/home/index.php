@@ -12,5 +12,5 @@
 <li>✓ Menghapus artikel</li>
 </ul>
 </div>
-<a href='/lab11_full/artikel/index' class='btn btn-primary btn-lg'>Kelola Artikel</a>
+<a href='/lab11_full/user/login' class='btn btn-primary btn-lg'>Kelola Artikel</a>
 </div>
