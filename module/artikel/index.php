@@ -4,7 +4,7 @@ $data = $db->getAll('artikel');
 ?>
 <div class='container mt-4'>
 <h2>Daftar Artikel</h2>
-<a href='/lab11_full/artikel/tambah' class='btn btn-primary mb-3'>Tambah Artikel</a>
+<a href='/lab11_php_oop/artikel/tambah' class='btn btn-primary mb-3'>Tambah Artikel</a>
 <table class='table table-bordered table-striped'>
 <tr><th>ID</th><th>Judul</th><th>Konten</th><th>Aksi</th></tr>
 <?php if($data): ?>
@@ -14,8 +14,8 @@ $data = $db->getAll('artikel');
 <td><?= htmlspecialchars($row['judul']) ?></td>
 <td><?= htmlspecialchars(substr($row['konten'], 0, 50)) . '...' ?></td>
 <td>
-<a href='/lab11_full/artikel/ubah?id=<?= $row['id'] ?>' class='btn btn-warning btn-sm'>Ubah</a>
-<a href='/lab11_full/artikel/hapus?id=<?= $row['id'] ?>' class='btn btn-danger btn-sm' onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+<a href='/lab11_php_oop/artikel/ubah?id=<?= $row['id'] ?>' class='btn btn-warning btn-sm'>Ubah</a>
+<a href='/lab11_php_oop/artikel/hapus?id=<?= $row['id'] ?>' class='btn btn-danger btn-sm' onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
 </td>
 </tr>
 <?php endforeach; ?>

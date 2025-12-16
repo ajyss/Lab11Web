@@ -1,7 +1,7 @@
 <?php
 // Cek jika sudah login, langsung ke home
 if (isset($_SESSION['is_login'])) {
-    header('Location: ../home/index');
+    header('Location: /lab11_php_oop/home/index');
     exit;
 }
 
@@ -31,7 +31,7 @@ if ($_POST) {
         $_SESSION['username'] = $data['username'];
         $_SESSION['nama'] = $data['nama'];
         // Redirect ke halaman admin/artikel
-        header('Location: /lab11_full/artikel/index');
+        header('Location: /lab11_php_oop/artikel/index');
         exit;
     } else {
         $message = "Username atau password salah!";
@@ -74,7 +74,7 @@ if ($_POST) {
             </div>
         </form>
         <div class="mt-3 text-center">
-            <a href="../home/index">Kembali ke Home</a>
+            <a href="/lab11_php_oop/home/index">Kembali ke Home</a>
         </div>
     </div>
 </body>

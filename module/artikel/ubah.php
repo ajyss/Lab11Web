@@ -7,7 +7,7 @@ $form = new Form("", "Update");
 if(isset($_POST['submit'])){
     $sql = "UPDATE artikel SET judul='{$db->escape($_POST['judul'])}', konten='{$db->escape($_POST['konten'])}' WHERE id='$id'";
     if($db->query($sql)){
-        header("Location: /lab11_full/artikel/index");
+        header("Location: /lab11_php_oop/artikel/index");
     }
 }
 ?>
