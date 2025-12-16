@@ -11,7 +11,7 @@ $message = "";
 if ($_POST) {
     $db = new Database();
     // Ambil input dan sanitasi (basic)
-    $username = $_POST['username'];
+    $username = $db->escape($_POST['username']);
     $password = $_POST['password'];
 
     // Query cari user berdasarkan username
@@ -27,7 +27,7 @@ if ($_POST) {
         $_SESSION['username'] = $data['username'];
         $_SESSION['nama'] = $data['nama'];
         // Redirect ke halaman admin/artikel
-        header('Location: ../artikel/index');
+        header('Location: /lab11_full/artikel/index');
         exit;
     } else {
         $message = "Username atau password salah!";

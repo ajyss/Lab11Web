@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "Password baru minimal 6 karakter!";
     } else {
         // Ambil data user dari database
-        $username = $_SESSION['username'];
+        $username = $db->escape($_SESSION['username']);
         $sql = "SELECT password FROM users WHERE username = '{$username}' LIMIT 1";
         $result = $db->query($sql);
         $user = $result->fetch_assoc();
