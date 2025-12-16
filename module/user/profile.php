@@ -1,7 +1,7 @@
 <?php
 // Cek jika belum login, redirect ke login
 if (!isset($_SESSION['is_login'])) {
-    header('Location: /lab11_php_oop/user/login');
+    header('Location: /lab11_full/user/login');
     exit;
 }
 

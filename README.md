@@ -18,7 +18,7 @@ Praktikum 12 menambahkan fitur autentikasi dan session management pada sistem CR
 
 ## 2. Struktur Direktori
 ```
-lab11_php_oop/
+lab11_full/
 │ index.php
 │ config.php
 │ .htaccess (opsional)

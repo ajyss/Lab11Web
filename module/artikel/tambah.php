@@ -13,7 +13,7 @@ if(isset($_POST['submit'])){
     $sql = "INSERT INTO artikel ($columns) VALUES ($values)";
     
     if($db->query($sql)){
-        header("Location: /lab11_php_oop/artikel/index");
+        header("Location: /lab11_full/artikel/index");
     }
 }
 ?>
